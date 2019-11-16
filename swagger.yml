@@ -1,0 +1,70 @@
+swagger: "2.0"
+info:
+  description: The Strains API that documents strains and their effects
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+
+# First model strain
+# Strain - The Strain name such as Fire OG
+# Type - Sativa, Indica, Hybrid
+# Rating - a 0-5 rating
+# Description - A description of the strain
+
+paths:
+  /strains:
+    get:
+      operationId: "strains.read"
+      tags:
+        - "Strain"
+      summary: "A full list of strains"
+      description: "Returns a list of strains"
+      responses:
+        200:
+          description: "Successful return of a list strain"
+          schema:
+            type: "array"
+            items:
+              properties:
+                strain:
+                  type: "string"
+                type:
+                  type: "string"
+                rating:
+                  type: "number"
+                description:
+                  type: "string"
+
+  /strains/{strain}:
+    get:
+      operationId: "strains.read_one"
+      tags:
+        - "Strain"
+      summary: "A single strain"
+      description: "Returns a single strain from the list of strains"
+      parameters:
+        - name: strain
+          in: path
+          description: The strain requested
+          type: string
+          required: True
+      responses:
+        200:
+          description: "Successful return  of a strain"
+          schema:
+            properties:
+              strain:
+                type: "string"
+              type:
+                type: "string"
+              rating:
+                type: "number"
+              description:
+                type: "string"

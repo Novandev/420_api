@@ -2,6 +2,7 @@ from flask import (
     Flask,
     render_template
 )
+import connexion
 
 # The columns from the dataset will be the the columsn in the database
 
@@ -14,15 +15,13 @@ from flask import (
 #        'Plum', 'Pear', 'Creative', 'Energetic', 'Tingly', 'Euphoric', 'Relaxed', 'Aroused',
 #        'Happy', 'Uplifted', 'Hungry', 'Talkative', 'Giggly', 'Focused', 'Sleepy', 'Dry', 'Mouth']
 
-# Strings 
 
-# Strain - The Strain name such as Fire OG
-# Type - Sativa, Indica, Hybrid
-# Rating - a 0-5 rating
-# Description - A description of the strain
 
-# Create the application instance
-app = Flask(__name__, template_folder="templates")
+
+app = connexion.App(__name__, specification_dir='./')
+
+# Read the swagger.yml file to configure the endpoints
+app.add_api('swagger.yml')
 
 # Create a URL route in our application for "/"
 @app.route('/')
@@ -30,11 +29,10 @@ def home():
     """
     This function just responds to the browser ULR
     localhost:5000/
-
     :return:        the rendered template 'home.html'
     """
     return render_template('home.html')
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
